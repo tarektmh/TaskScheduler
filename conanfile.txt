@@ -1,0 +1,5 @@
+[requires]
+# External libraries needed to be added here
+
+[generators]
+cmake

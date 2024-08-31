@@ -1,29 +1,21 @@
-#include "Task.h"
 #include "Scheduler.h"
-#include "FCFSScheduler.h"
-#include "SJNScheduler.h"
-#include "PriorityScheduler.h"
-#include "RoundRobinScheduler.h"
+#include <iostream>
 
 int main() {
-    size_t numThreads = 4; // Configurable number of threads
-    std::chrono::milliseconds timeQuantum(100); // Time quantum for Round-Robin
+    Scheduler new_scheduler(4);  // Example with 4 threads
 
-    FCFSScheduler fcfsScheduler(numThreads);
-    SJNScheduler sjnScheduler(numThreads);
-    PriorityScheduler priorityScheduler(numThreads);
-    RoundRobinScheduler rrScheduler(numThreads, timeQuantum);
+    new_scheduler.setSchedulingAlgorithm(Scheduler::SchedulingAlgorithm::FCFS);
 
-    // Add tasks to the desired scheduler
-    fcfsScheduler.addTask(Task(1, std::chrono::milliseconds(500)));
-    sjnScheduler.addTask(Task(2, std::chrono::milliseconds(300)));
-    priorityScheduler.addTask(Task(3, std::chrono::milliseconds(700)));
-    rrScheduler.addTask(Task(4, std::chrono::milliseconds(200)));
+    // Example tasks
+    new_scheduler.addTask(Task(1, 1, std::chrono::milliseconds(500), []{ std::cout << "Task 1 executed\n"; }));
+    new_scheduler.addTask(Task(2, 2, std::chrono::milliseconds(300), []{ std::cout << "Task 2 executed\n"; }));
+    new_scheduler.addTask(Task(3, 3, std::chrono::milliseconds(200), []{ std::cout << "Task 3 executed\n"; }));
 
-    // Execute tasks (for Round-Robin)
-    rrScheduler.executeTasks();
+    new_scheduler.start();
 
-    std::this_thread::sleep_for(std::chrono::seconds(2)); // Allow time for tasks to complete
+    std::this_thread::sleep_for(std::chrono::seconds(15));
+
+    new_scheduler.stop();
 
     return 0;
 }
