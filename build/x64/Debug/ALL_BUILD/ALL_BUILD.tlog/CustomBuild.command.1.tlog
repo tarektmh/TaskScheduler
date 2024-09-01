@@ -1,0 +1,10 @@
+^D:\SOFTWARE\TASKSCHEDULER\CMAKELISTS.TXT
+setlocal
+C:\CMake\bin\cmake.exe -SD:/Software/TaskScheduler -BD:/Software/TaskScheduler/build --check-stamp-file D:/Software/TaskScheduler/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -84,6 +84,8 @@ void Scheduler::executeTasks() {
                 case SchedulingAlgorithm::RoundRobin:
                     task = RRQueue.front();
                     RRQueue.pop();
+                    lock.unlock();
+                    std::cout << "Executing with Round-Robin .. Task ID: " << task.getId() << std::endl;
                     break;
                 default:
                     task = taskQueue.front();
